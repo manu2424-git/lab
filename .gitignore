@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# OS files
+.DS_Store

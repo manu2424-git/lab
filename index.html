@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Login Page</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <br>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <br>
+        <button type="submit" id="loginBtn">Log In</button>
+    </form>
+    <p id="message"></p>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const user =
+                document.getElementById('username').value;
+            const pass =
+                document.getElementById('password').value;
+
+            const messageEl =
+                document.getElementById('message');
+            if (user === 'admin' && pass === '1234') {
+                messageEl.textContent = 'Login successful!';
+            } else {
+                messageEl.textContent = 'Invalid credentials!';
+            }
+        }
+    </script>
+</body>
+</html>
+
+Step 5: Create Selenium Test Program
+Create the JavaScript test file:
+nano test.js
+Enter:
+const { Builder, By } = require('selenium-webdriver');
+const assert = require('assert');
+const path = require('path');
+const sleep = (ms) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+async function runTest() {
+    let driver =
+        await new Builder()
+            .forBrowser('chrome')
+            .build();
+    try {
+
+        const filePath =
+            path.resolve(__dirname, 'index.html');
+        await driver.get(`file://${filePath}`);
+        let userInput =
+            await driver.findElement(By.id('username'));
+        let passInput =
+            await driver.findElement(By.id('password'));
+        let submitBtn =
+            await driver.findElement(By.id('loginBtn'));
+        let messageDisplay =
+            await driver.findElement(By.id('message'));
+        await sleep(2000);
+        console.log(
+            'Entering username and password...'
+        );
+        await userInput.sendKeys('admin');
+        await sleep(2000);
+        await passInput.sendKeys('1234');
+        await sleep(2000);
+        await submitBtn.click();
+        await sleep(3000);
+        let resultText =
+            await messageDisplay.getText();
+        assert.strictEqual(
+            resultText,
+            'Login successful!',
+            'Test Failed: Expected login to succeed.'
+        );
+        console.log(
+            'Test Passed: Successfully logged in!'
+        );
+    } catch (error) {
+        console.error(
+            'Test Failed:',
+            error.message
+        );
+    } finally {
+        await driver.quit();
+ document.getElementById('username').value;
+            const pass =
+                document.getElementById('password').value;
+
+            const messageEl =
+                document.getElementById('message');
+            if (user === 'admin' && pass === '1234') {
+                messageEl.textContent = 'Login successful!';
+            } else {
+                messageEl.textContent = 'Invalid credentials!';
+            }
+        }
+    </script>
+</body>
+</html>
